@@ -21,7 +21,7 @@ dependencies {
     testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.28'
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.28'
 }
-//test1
+
 test {
-    useJUnitPlatform()
+    useTestNG()
 }
