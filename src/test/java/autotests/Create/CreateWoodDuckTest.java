@@ -18,7 +18,7 @@ public class CreateWoodDuckTest extends TestNGCitrusSpringSupport {
 
     @Test(description = "Создание утки с материалом wood")
     @CitrusTest
-    public void successfulFly(@Optional @CitrusResource TestCaseRunner runner) {
+    public void successfulCreate(@Optional @CitrusResource TestCaseRunner runner) {
         action.createDuck(runner, "black", 0.15, "wood", "quack", "FIXED");
         runner.$(http().client("http://localhost:2222")
                 .receive()

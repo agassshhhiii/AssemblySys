@@ -16,7 +16,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class DuckNotFlyingTest extends TestNGCitrusSpringSupport {
     private final DuckActions action = new DuckActions();
 
-    @Test(description = "Проверка того, что уточка не полетела")
+    @Test(description = "Проверка того, что уточка без крыльев не полетела")
     @CitrusTest
     public void successfulFly(@Optional @CitrusResource TestCaseRunner runner) {
         action.createDuck(runner, "black", 10, "slime", "quack", "FIXED");
@@ -25,7 +25,7 @@ public class DuckNotFlyingTest extends TestNGCitrusSpringSupport {
                 .response(HttpStatus.OK)
                 .message()
                 .extract(fromBody().expression("$.id", "duckId")));
-        action.duckFly(runner, "${duckId}");
+        action.flyDuck(runner, "${duckId}");
         action.validateResponse(runner, "{\n" + "  \"message\": \"I can not fly :C\"\n" + "}");
         action.deleteDuck(runner, "${duckId}");
     }

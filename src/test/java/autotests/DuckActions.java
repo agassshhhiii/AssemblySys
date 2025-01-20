@@ -21,7 +21,7 @@ public class DuckActions {
                         + "  \"wingsState\": \"" + wingsState
                         + "\"\n" + "}"));
     }
-    public void duckFly(TestCaseRunner runner, String id) {
+    public void flyDuck(TestCaseRunner runner, String id) {
         runner.$(http()
                 .client("http://localhost:2222")
                 .send()
@@ -54,5 +54,14 @@ public class DuckActions {
                 .queryParam("material",material)
                 .queryParam("sound",sound)
                 .queryParam("wingsState",wingsState));
+    }
+    public void quackDuck(TestCaseRunner runner, String id, String repetitionCount, String soundCount) {
+        runner.$(http()
+                .client("http://localhost:2222")
+                .send()
+                .get("/api/duck/action/quack")
+                .queryParam("id", id)
+                .queryParam("repetitionCount",repetitionCount)
+                .queryParam("soundCount",soundCount));
     }
 }

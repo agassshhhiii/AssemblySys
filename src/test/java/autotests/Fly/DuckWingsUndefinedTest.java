@@ -25,7 +25,7 @@ public class DuckWingsUndefinedTest extends TestNGCitrusSpringSupport {
                 .response(HttpStatus.OK)
                 .message()
                 .extract(fromBody().expression("$.id", "duckId")));
-        action.duckFly(runner, "${duckId}");
+        action.flyDuck(runner, "${duckId}");
         action.validateResponse(runner, "{\n" + "  \"message\": \"Wings are not detected :(\"\n" + "}");
         action.deleteDuck(runner, "${duckId}");
     }
