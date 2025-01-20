@@ -70,4 +70,11 @@ public class DuckActions {
                 .get("/api/duck/action/swim")
                 .queryParam("id", id));
     }
+    public void propertiesDuck(TestCaseRunner runner, String id) {
+        runner.$(http()
+                .client("http://localhost:2222")
+                .send()
+                .get("/api/duck/action/properties")
+                .queryParam("id", id));
+    }
 }
