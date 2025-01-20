@@ -8,7 +8,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class DuckActions {
 
-    public void createDuck(TestCaseRunner runner, String color, double height, String material, String sound, String wingsState) {
+    public void createDuck(TestCaseRunner runner, String color, String height, String material, String sound, String wingsState) {
         runner.$(http().client("http://localhost:2222")
                 .send()
                 .post("/api/duck/create")
@@ -63,5 +63,11 @@ public class DuckActions {
                 .queryParam("id", id)
                 .queryParam("repetitionCount",repetitionCount)
                 .queryParam("soundCount",soundCount));
+    }
+    public void swimDuck(TestCaseRunner runner, String id) {
+        runner.$(http().client("http://localhost:2222")
+                .send()
+                .get("/api/duck/action/swim")
+                .queryParam("id", id));
     }
 }

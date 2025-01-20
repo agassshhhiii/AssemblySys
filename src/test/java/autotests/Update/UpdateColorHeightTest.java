@@ -19,7 +19,7 @@ public class UpdateColorHeightTest extends TestNGCitrusSpringSupport {
     @Test(description = "Проверка того, что уточка меняет цвет и высоту")
     @CitrusTest
     public void successfulUpdateColorHeight(@Optional @CitrusResource TestCaseRunner runner) {
-        action.createDuck(runner, "black", 10, "slime", "quack", "FIXED");
+        action.createDuck(runner, "black", "10", "slime", "quack", "FIXED");
         runner.$(http().client("http://localhost:2222")
                 .receive()
                 .response(HttpStatus.OK)

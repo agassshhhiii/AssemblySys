@@ -18,8 +18,8 @@ public class DuckWingsUndefinedTest extends TestNGCitrusSpringSupport {
 
     @Test(description = "Проверка того, что у утки не обнаружены крылья")
     @CitrusTest
-    public void successfulFly(@Optional @CitrusResource TestCaseRunner runner) {
-        action.createDuck(runner, "black", 10, "slime", "quack", "UNDEFINED");
+    public void successfulUndefined(@Optional @CitrusResource TestCaseRunner runner) {
+        action.createDuck(runner, "black", "10", "slime", "quack", "UNDEFINED");
         runner.$(http().client("http://localhost:2222")
                 .receive()
                 .response(HttpStatus.OK)

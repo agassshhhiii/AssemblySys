@@ -19,8 +19,8 @@ public class EvenIdQuackTest extends TestNGCitrusSpringSupport {
 
     @Test(description = "Проверка того, что утка с чётным id издает корректный звук (moo)", invocationCount = 2)
     @CitrusTest
-    public void successfulQuack(@Optional @CitrusResource TestCaseRunner runner) {
-        action.createDuck(runner, "odd", 10, "slime", "quack", "UNDEFINED");
+    public void successfulEvenQuack(@Optional @CitrusResource TestCaseRunner runner) {
+        action.createDuck(runner, "odd", "10", "slime", "quack", "UNDEFINED");
         runner.$(http().client("http://localhost:2222")
                 .receive()
                 .response(HttpStatus.OK)

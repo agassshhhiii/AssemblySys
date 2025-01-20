@@ -19,7 +19,7 @@ public class UpdateColorSoundTest extends TestNGCitrusSpringSupport {
     @Test(description = "Проверка того, что уточка меняет цвет и звук")
     @CitrusTest
     public void successfulUpdateColorSound(@Optional @CitrusResource TestCaseRunner runner) {
-        action.createDuck(runner, "black", 10, "slime", "quack", "FIXED");
+        action.createDuck(runner, "black", "10", "slime", "quack", "FIXED");
         runner.$(http().client("http://localhost:2222")
                 .receive()
                 .response(HttpStatus.OK)

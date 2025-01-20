@@ -1,4 +1,4 @@
-package autotests.Fly;
+package autotests.Swim;
 
 import autotests.DuckActions;
 import com.consol.citrus.TestCaseRunner;
@@ -10,26 +10,23 @@ import org.springframework.http.MediaType;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
-import static com.consol.citrus.actions.EchoAction.Builder.echo;
 import static com.consol.citrus.dsl.MessageSupport.MessageBodySupport.fromBody;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
-public class DuckFlyingTest extends TestNGCitrusSpringSupport {
+public class ExistingSwimTest extends TestNGCitrusSpringSupport {
     private final DuckActions action = new DuckActions();
 
-    @Test(description = "Проверка того, что уточка с крыльями полетела")
+    @Test(description = "Проверка того, что уточка поплыла")
     @CitrusTest
-    public void successfulFly(@Optional @CitrusResource TestCaseRunner runner) {
-        action.createDuck(runner, "pink", "10", "puff", "quack", "ACTIVE");
+    public void successfulSwim(@Optional @CitrusResource TestCaseRunner runner) {
+        action.createDuck(runner, "black", "10", "slime", "quack", "FIXED");
         runner.$(http().client("http://localhost:2222")
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
                 .extract(fromBody().expression("$.id", "duckId")));
-        action.flyDuck(runner, "${duckId}");
-        action.validateResponse(runner, "{\n" + "  \"message\": \"I am flying :)\"\n" + "}");
+        action.swimDuck(runner, "${duckId}");
+        action.validateResponse(runner, "{\n" + "  \"message\": \"Paws are not found ((((\"\n" + "}");
         action.deleteDuck(runner, "${duckId}");
-        //extractDataFromResponse(runner);
-        //runner.$(echo("test variables: \"${errorMessage}\" and \"${type}\""));
     }
 }

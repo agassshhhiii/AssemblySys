@@ -18,20 +18,27 @@ public class CreateWoodDuckTest extends TestNGCitrusSpringSupport {
 
     @Test(description = "Создание утки с материалом wood")
     @CitrusTest
-    public void successfulCreate(@Optional @CitrusResource TestCaseRunner runner) {
-        action.createDuck(runner, "black", 0.15, "wood", "quack", "FIXED");
+    public void createWoodDuck(@Optional @CitrusResource TestCaseRunner runner) {
+        runner.variable("color", "black");
+        runner.variable("height", "15.2");
+        runner.variable("material", "wood");
+        runner.variable("sound", "quack");
+        runner.variable("wingsState", "FIXED");
+
+        action.createDuck(runner, "${color}","${height}","${material}","${sound}","${wingsState}");
         runner.$(http().client("http://localhost:2222")
                 .receive()
                 .response(HttpStatus.OK)
-                .message());
-        action.validateResponse(runner, "{\n"
-                + "  \"id\": \"" + "${duckId}" + "\",\n"
-                + "  \"color\": \"" + "black" + "\",\n"
-                + "  \"height\": " + "0.15" + ",\n"
-                + "  \"material\": \"" + "wood" + "\",\n"
-                + "  \"sound\": \"" + "quack" + "\",\n"
-                + "  \"wingsState\": \"" + "FIXED"
-                + "\"\n" + "}");
-    }
+                .message()
+                .extract(fromBody().expression("$.id", "duckId"))
+                .body("{"
+                        + "\"id\": ${duckId},"
+                        + "\"color\": \"${color}\","
+                        + "\"height\": ${height},"
+                        + "\"material\": \"${material}\","
+                        + "\"sound\": \"${sound}\","
+                        + "\"wingsState\": \"${wingsState}\""
+                        + "}"));
 
+    }
 }

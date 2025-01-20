@@ -18,8 +18,8 @@ public class DuckNotFlyingTest extends TestNGCitrusSpringSupport {
 
     @Test(description = "Проверка того, что уточка без крыльев не полетела")
     @CitrusTest
-    public void successfulFly(@Optional @CitrusResource TestCaseRunner runner) {
-        action.createDuck(runner, "black", 10, "slime", "quack", "FIXED");
+    public void successfulNotFly(@Optional @CitrusResource TestCaseRunner runner) {
+        action.createDuck(runner, "black", "10", "slime", "quack", "FIXED");
         runner.$(http().client("http://localhost:2222")
                 .receive()
                 .response(HttpStatus.OK)
