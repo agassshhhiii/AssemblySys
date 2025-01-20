@@ -21,7 +21,7 @@ public class PropertiesRubberTest extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void successfulPropertiesRubber(@Optional @CitrusResource TestCaseRunner runner) {
         runner.variable("color", "black");
-        runner.variable("height", "15.0");
+        runner.variable("height", "15.2");
         runner.variable("material", "rubber");
         runner.variable("sound", "quack");
         runner.variable("wingsState", "FIXED");
@@ -31,8 +31,15 @@ public class PropertiesRubberTest extends TestNGCitrusSpringSupport {
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
-                .extract(fromBody().expression("$.id", "duckId")));
-
+                .extract(fromBody().expression("$.id", "duckId"))
+                .body("{"
+                        + "\"id\": ${duckId},"
+                        + "\"color\": \"${color}\","
+                        + "\"height\": ${height},"
+                        + "\"material\": \"${material}\","
+                        + "\"sound\": \"${sound}\","
+                        + "\"wingsState\": \"${wingsState}\""
+                        + "}"));
         runner.$(action(context -> {
             String duckId = context.getVariable("duckId");
             //Проверка на четность ID
@@ -41,17 +48,6 @@ public class PropertiesRubberTest extends TestNGCitrusSpringSupport {
                 Assert.fail("ID утки четный: " + duckId);
             }}));
         action.propertiesDuck(runner, "${duckId}");
-        runner.$(http().client("http://localhost:2222")
-                .receive()
-                .response(HttpStatus.OK)
-                .message()
-                .body("{"
-                        + "\"color\": \"${color}\","
-                        + "\"height\": \"${height}\","
-                        + "\"material\": \"${material}\","
-                        + "\"sound\": \"${sound}\","
-                        + "\"wingsState\": \"${wingsState}\""
-                        + "}"));
         action.deleteDuck(runner, "${duckId}");
     }
 }
