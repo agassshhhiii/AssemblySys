@@ -14,8 +14,8 @@ public class PropertiesDuckTest extends TestNGCitrusSpringSupport {
     @Test(description = "Тест: уточка с нечётным id и материалом rubber показывает характеристики")
     @CitrusTest
     public void propertiesRubber(@Optional @CitrusResource TestCaseRunner runner) {
-        action.createDuck(runner, "pink", "10", "rubber", "quack", "UNDEFINED");
-        action.idDuck(runner);
+        action.createDuck(runner, "pink", "10", "rubber", "quack", "ACTIVE");
+        action.getDuckId(runner);
         action.checkOddDuck(runner, "${duckId}");
         action.propertiesDuck(runner, "${duckId}");
         action.validateResponse(runner, "{\n"
@@ -30,8 +30,8 @@ public class PropertiesDuckTest extends TestNGCitrusSpringSupport {
     @Test(description = "Тест: уточка с чётным id и материалом wood показывает характеристики")
     @CitrusTest
     public void propertiesWood(@Optional @CitrusResource TestCaseRunner runner) {
-        action.createDuck(runner, "pink", "10", "wood", "quack", "UNDEFINED");
-        action.idDuck(runner);
+        action.createDuck(runner, "pink", "10", "wood", "quack", "ACTIVE");
+        action.getDuckId(runner);
         action.checkEvenDuck(runner, "${duckId}");
         action.propertiesDuck(runner, "${duckId}");
         action.validateResponse(runner, "{\n" + "}");

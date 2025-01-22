@@ -2,5 +2,7 @@
 .idea/
 .idea
 .idea/gradle.xml
-target/
 build/
+/target/
+/.idea/
+/target/citrus-reports/

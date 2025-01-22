@@ -23,28 +23,14 @@ public class DuckActions {
                         + "  \"wingsState\": \"" + wingsState
                         + "\"\n" + "}"));
     }
-    public void createWoodDuck(TestCaseRunner runner){
-        runner.variable("color", "black");
-        runner.variable("height", "15.2");
-        runner.variable("material", "wood");
-        runner.variable("sound", "quack");
-        runner.variable("wingsState", "FIXED");
-    }
-    public void createRubberDuck(TestCaseRunner runner) {
-        runner.variable("color", "black");
-        runner.variable("height", "15.2");
-        runner.variable("material", "rubber");
-        runner.variable("sound", "quack");
-        runner.variable("wingsState", "FIXED");
-    }
-    public void idDuck(TestCaseRunner runner) {
+    public void getDuckId(TestCaseRunner runner) {
         runner.$(http().client("http://localhost:2222")
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
                 .extract(fromBody().expression("$.id", "duckId")));
     }
-    public void idCreateDuck(TestCaseRunner runner) {
+    public void getAndCheckIdDuck(TestCaseRunner runner) {
         runner.$(http().client("http://localhost:2222")
                 .receive()
                 .response(HttpStatus.OK)
@@ -62,20 +48,22 @@ public class DuckActions {
     public void checkOddDuck(TestCaseRunner runner, String id) {
         runner.$(action(context -> {
             String duckId = context.getVariable("duckId");
-            if (Integer.parseInt(duckId) % 2 == 0) {
+            while (Integer.parseInt(duckId) % 2 == 0) {
                 deleteDuck(runner, "${duckId}");
                 createDuck(runner, "pink", "10", "rubber", "quack", "UNDEFINED");
-                idDuck(runner);
+                getDuckId(runner);
+                duckId = context.getVariable("duckId");
             }
         }));
     }
     public void checkEvenDuck(TestCaseRunner runner, String id) {
         runner.$(action(context -> {
             String duckId = context.getVariable("duckId");
-            if (Integer.parseInt(duckId) % 2 != 0) {
+            while (Integer.parseInt(duckId) % 2 != 0) {
                 deleteDuck(runner, "${duckId}");
                 createDuck(runner, "pink", "10", "wood", "quack", "UNDEFINED");
-                idDuck(runner);
+                getDuckId(runner);
+                duckId = context.getVariable("duckId");
             }
         }));
     }
@@ -131,6 +119,15 @@ public class DuckActions {
         runner.$(http().client("http://localhost:2222")
                 .receive()
                 .response(HttpStatus.OK)
+                .message()
+                .contentType(MediaType.APPLICATION_JSON_VALUE).
+                body(responseMessage));
+    }
+    //сделала отдельный метод, чтобы не менять все остальные тесты
+    public void validateResponseForSwim(TestCaseRunner runner, String responseMessage,HttpStatus status) {
+        runner.$(http().client("http://localhost:2222")
+                .receive()
+                .response(status)
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE).
                 body(responseMessage));

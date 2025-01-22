@@ -15,7 +15,7 @@ public class UpdateDuckTest extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void updateColorHeight(@Optional @CitrusResource TestCaseRunner runner) {
         action.createDuck(runner, "black", "10", "slime", "quack", "FIXED");
-        action.idDuck(runner);
+        action.getDuckId(runner);
         action.updateDuck(runner, "${duckId}", "pink", "5", "slime", "quack", "FIXED");
         action.validateResponse(runner, "{\n" + "  \"message\": \"Duck with id = ${duckId} is updated\"\n" + "}");
         action.deleteDuck(runner, "${duckId}");
@@ -25,7 +25,7 @@ public class UpdateDuckTest extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void updateColorSound(@Optional @CitrusResource TestCaseRunner runner) {
         action.createDuck(runner, "black", "10", "slime", "quack", "FIXED");
-        action.idDuck(runner);
+        action.getDuckId(runner);
         action.updateDuck(runner, "${duckId}", "pink", "10", "slime", "quack-quack", "FIXED");
         action.validateResponse(runner, "{\n" + "  \"message\": \"Duck with id = ${duckId} is updated\"\n" + "}");
         action.deleteDuck(runner, "${duckId}");

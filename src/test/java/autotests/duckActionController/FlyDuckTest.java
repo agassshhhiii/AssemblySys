@@ -15,7 +15,7 @@ public class FlyDuckTest extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void flyActive(@Optional @CitrusResource TestCaseRunner runner) {
         action.createDuck(runner, "pink", "10", "puff", "quack", "ACTIVE");
-        action.idDuck(runner);
+        action.getDuckId(runner);
         action.flyDuck(runner, "${duckId}");
         action.validateResponse(runner, "{\n" + "  \"message\": \"I am flying :)\"\n" + "}");
         action.deleteDuck(runner, "${duckId}");
@@ -25,7 +25,7 @@ public class FlyDuckTest extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void flyFixed(@Optional @CitrusResource TestCaseRunner runner) {
         action.createDuck(runner, "black", "10", "slime", "quack", "FIXED");
-        action.idDuck(runner);
+        action.getDuckId(runner);
         action.flyDuck(runner, "${duckId}");
         action.validateResponse(runner, "{\n" + "  \"message\": \"I can not fly :C\"\n" + "}");
         action.deleteDuck(runner, "${duckId}");
@@ -35,7 +35,7 @@ public class FlyDuckTest extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void flyUndefined(@Optional @CitrusResource TestCaseRunner runner) {
         action.createDuck(runner, "black", "10", "slime", "quack", "UNDEFINED");
-        action.idDuck(runner);
+        action.getDuckId(runner);
         action.flyDuck(runner, "${duckId}");
         action.validateResponse(runner, "{\n" + "  \"message\": \"Wings are not detected :(\"\n" + "}");
         action.deleteDuck(runner, "${duckId}");

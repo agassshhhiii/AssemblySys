@@ -15,7 +15,7 @@ public class DeleteDuckTest extends TestNGCitrusSpringSupport {
     @CitrusTest
     public void deleteDuck(@Optional @CitrusResource TestCaseRunner runner) {
         action.createDuck(runner, "black", "10", "slime", "quack", "FIXED");
-        action.idDuck(runner);
+        action.getDuckId(runner);
         action.deleteDuck(runner, "${duckId}");
         action.validateResponse(runner, "{\n" + "  \"message\": \"Duck is deleted\"\n" + "}");
     }

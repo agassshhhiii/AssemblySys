@@ -14,8 +14,8 @@ public class QuackDuckTest extends TestNGCitrusSpringSupport {
     @Test(description = "Тест: уточка с чётным id издает корректный звук (moo)")
     @CitrusTest
     public void evenQuack(@Optional @CitrusResource TestCaseRunner runner) {
-        action.createDuck(runner, "pink", "10", "slime", "quack", "UNDEFINED");
-        action.idDuck(runner);
+        action.createDuck(runner, "pink", "10", "slime", "quack", "ACTIVE");
+        action.getDuckId(runner);
         action.checkEvenDuck(runner, "${duckId}");
         action.quackDuck(runner,"${duckId}","1","1");
         action.validateResponse(runner, "{\n" + "  \"sound\": \"moo\"\n" + "}");
@@ -25,8 +25,8 @@ public class QuackDuckTest extends TestNGCitrusSpringSupport {
     @Test(description = "Тест: уточка с нечётным id издает корректный звук (quack)")
     @CitrusTest
     public void oddQuack(@Optional @CitrusResource TestCaseRunner runner) {
-        action.createDuck(runner, "pink", "10", "slime", "quack", "UNDEFINED");
-        action.idDuck(runner);
+        action.createDuck(runner, "pink", "10", "slime", "quack", "ACTIVE");
+        action.getDuckId(runner);
         action.checkOddDuck(runner, "${duckId}");
         action.quackDuck(runner,"${duckId}","1","1");
         action.validateResponse(runner, "{\n" + "  \"sound\": \"quack\"\n" + "}");
