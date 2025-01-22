@@ -1,3 +1,6 @@
 .gradle/
 .idea/
+.idea
 .idea/gradle.xml
+target/
+build/
