@@ -39,7 +39,7 @@ public class DuckActionsClient extends TestNGCitrusSpringSupport {
                 .message()
                 .extract(fromBody().expression("$.id", "duckId")));
     }
-    public void getAndCheckIdDuck(TestCaseRunner runner) {
+    public void validateCreateAndGetId(TestCaseRunner runner) {
         runner.$(http().client(DuckService)
                 .receive()
                 .response(HttpStatus.OK)
@@ -54,7 +54,7 @@ public class DuckActionsClient extends TestNGCitrusSpringSupport {
                         + "\"wingsState\": \"${wingsState}\""
                         + "}"));
     }
-    public void checkOddDuck(TestCaseRunner runner, String id) {
+    public void checkOddDuck(TestCaseRunner runner) {
         runner.$(action(context -> {
             String duckId = context.getVariable("duckId");
             while (Integer.parseInt(duckId) % 2 == 0) {
@@ -65,7 +65,7 @@ public class DuckActionsClient extends TestNGCitrusSpringSupport {
             }
         }));
     }
-    public void checkEvenDuck(TestCaseRunner runner, String id) {
+    public void checkEvenDuck(TestCaseRunner runner) {
         runner.$(action(context -> {
             String duckId = context.getVariable("duckId");
             while (Integer.parseInt(duckId) % 2 != 0) {
@@ -124,7 +124,7 @@ public class DuckActionsClient extends TestNGCitrusSpringSupport {
                 .get("/api/duck/action/properties")
                 .queryParam("id", id));
     }
-    public void validateResponse(TestCaseRunner runner, String responseMessage) {
+    public void validateResponseOk(TestCaseRunner runner, String responseMessage) {
         runner.$(http().client(DuckService)
                 .receive()
                 .response(HttpStatus.OK)
@@ -133,7 +133,7 @@ public class DuckActionsClient extends TestNGCitrusSpringSupport {
                 body(responseMessage));
     }
     //сделала отдельный метод, чтобы не менять все остальные тесты
-    public void validateResponseForSwim(TestCaseRunner runner, String responseMessage,HttpStatus status) {
+    public void validateResponse(TestCaseRunner runner, String responseMessage,HttpStatus status) {
         runner.$(http().client(DuckService)
                 .receive()
                 .response(status)

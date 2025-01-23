@@ -16,7 +16,7 @@ public class SwimDuckTest extends DuckActionsClient {
         createDuck(runner, "black", "10", "slime", "quack", "ACTIVE");
         getDuckId(runner);
         swimDuck(runner, "${duckId}");
-        validateResponseForSwim(runner, "{\n" + "  \"message\": \"I'm swimming\"\n" + "}", HttpStatus.OK);
+        validateResponse(runner, "{\n" + "  \"message\": \"I'm swimming\"\n" + "}", HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
     //падает тест, тк сваггер выдает 404 и другое тело ответа
@@ -26,9 +26,9 @@ public class SwimDuckTest extends DuckActionsClient {
     public void nonExistingIdSwim(@Optional @CitrusResource TestCaseRunner runner) {
         createDuck(runner, "black", "10", "slime", "quack", "ACTIVE");
         getDuckId(runner);
-        swimDuck(runner, "${duckId}");
         deleteDuck(runner, "${duckId}");
-        validateResponseForSwim(runner, "{\n" + "  \"message\": \"Duck is deleted\"\n" + "}", HttpStatus.OK);
+        swimDuck(runner, "${duckId}");
+        validateResponse(runner, "{\n" + "  \"message\": \"Paws are not found ((((\"\n" + "}", HttpStatus.NOT_FOUND);
         //если я задам большое число для id (10000), то при реальных условиях этот id мб создан как полноценная утка
         //и тогда тест будет работать не правильно, для этого теста я взяла ситуацию с удалённым id
     }

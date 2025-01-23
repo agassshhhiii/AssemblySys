@@ -14,9 +14,9 @@ public class PropertiesDuckTest extends DuckActionsClient {
     public void propertiesRubber(@Optional @CitrusResource TestCaseRunner runner) {
         createDuck(runner, "pink", "10", "rubber", "quack", "ACTIVE");
         getDuckId(runner);
-        checkOddDuck(runner, "${duckId}");
+        checkOddDuck(runner);
         propertiesDuck(runner, "${duckId}");
-        validateResponse(runner, "{\n"
+        validateResponseOk(runner, "{\n"
                 + "  \"color\": \"pink\",\n"
                 + "  \"height\": 10.0,\n"
                 + "  \"material\": \"rubber\",\n"
@@ -32,9 +32,9 @@ public class PropertiesDuckTest extends DuckActionsClient {
     public void propertiesWood(@Optional @CitrusResource TestCaseRunner runner) {
         createDuck(runner, "pink", "10", "wood", "quack", "ACTIVE");
         getDuckId(runner);
-        checkEvenDuck(runner, "${duckId}");
+        checkEvenDuck(runner);
         propertiesDuck(runner, "${duckId}");
-        validateResponse(runner, "{\n"
+        validateResponseOk(runner, "{\n"
                 + "  \"color\": \"pink\",\n"
                 + "  \"height\": 10.0,\n"
                 + "  \"material\": \"wood\",\n"

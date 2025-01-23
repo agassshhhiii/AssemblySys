@@ -15,7 +15,7 @@ public class FlyDuckTest extends DuckActionsClient {
         createDuck(runner, "pink", "10", "puff", "quack", "ACTIVE");
         getDuckId(runner);
         flyDuck(runner, "${duckId}");
-        validateResponse(runner, "{\n" + "  \"message\": \"I am flying\"\n" + "}");
+        validateResponseOk(runner, "{\n" + "  \"message\": \"I am flying\"\n" + "}");
         deleteDuck(runner, "${duckId}");
     }
     //падает тест, потому что в документации ожидаемый ответ другой
@@ -26,7 +26,7 @@ public class FlyDuckTest extends DuckActionsClient {
         createDuck(runner, "black", "10", "slime", "quack", "FIXED");
         getDuckId(runner);
         flyDuck(runner, "${duckId}");
-        validateResponse(runner, "{\n" + "  \"message\": \"I can't fly\"\n" + "}");
+        validateResponseOk(runner, "{\n" + "  \"message\": \"I can't fly\"\n" + "}");
         deleteDuck(runner, "${duckId}");
     }
     //падает тест, потому что в документации ожидаемый ответ другой
@@ -37,7 +37,7 @@ public class FlyDuckTest extends DuckActionsClient {
         createDuck(runner, "black", "10", "slime", "quack", "UNDEFINED");
         getDuckId(runner);
         flyDuck(runner, "${duckId}");
-        validateResponse(runner, "{\n" + "  \"message\": \"Wings are not detected :(\"\n" + "}");
+        validateResponseOk(runner, "{\n" + "  \"message\": \"Wings are not detected :(\"\n" + "}");
         deleteDuck(runner, "${duckId}");
     }
     //насчет этого не уверена как поступить, в документации такого вообще не ожидается, а проверить надо, оставила ответ сваггера

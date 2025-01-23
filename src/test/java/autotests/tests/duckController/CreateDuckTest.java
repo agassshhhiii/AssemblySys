@@ -18,7 +18,7 @@ public class CreateDuckTest extends DuckActionsClient {
         runner.variable("sound", "quack");
         runner.variable("wingsState", "FIXED");
         createDuck(runner, "${color}","${height}","${material}","${sound}","${wingsState}");
-        getAndCheckIdDuck(runner);
+        validateCreateAndGetId(runner);
         deleteDuck(runner, "${duckId}");
     }
 
@@ -31,7 +31,7 @@ public class CreateDuckTest extends DuckActionsClient {
         runner.variable("sound", "quack");
         runner.variable("wingsState", "FIXED");
         createDuck(runner, "${color}","${height}","${material}","${sound}","${wingsState}");
-        getAndCheckIdDuck(runner);
+        validateCreateAndGetId(runner);
         deleteDuck(runner, "${duckId}");
     }
 }

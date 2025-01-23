@@ -15,7 +15,7 @@ public class UpdateDuckTest extends DuckActionsClient {
         createDuck(runner, "black", "10", "slime", "quack", "FIXED");
         getDuckId(runner);
         updateDuck(runner, "${duckId}", "pink", "5", "slime", "quack", "FIXED");
-        validateResponse(runner, "{\n" + "  \"message\": \"Duck with id = ${duckId} is updated\"\n" + "}");
+        validateResponseOk(runner, "{\n" + "  \"message\": \"Duck with id = ${duckId} is updated\"\n" + "}");
         deleteDuck(runner, "${duckId}");
     }
 
@@ -25,7 +25,7 @@ public class UpdateDuckTest extends DuckActionsClient {
         createDuck(runner, "black", "10", "slime", "quack", "FIXED");
         getDuckId(runner);
         updateDuck(runner, "${duckId}", "pink", "10", "slime", "quack-quack", "FIXED");
-        validateResponse(runner, "{\n" + "  \"message\": \"Duck with id = ${duckId} is updated\"\n" + "}");
+        validateResponseOk(runner, "{\n" + "  \"message\": \"Duck with id = ${duckId} is updated\"\n" + "}");
         deleteDuck(runner, "${duckId}");
     }
 }
