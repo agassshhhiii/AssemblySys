@@ -1,0 +1,10 @@
+.gradle/
+.idea/
+/.idea/
+.idea
+.idea/gradle.xml
+build/
+/build/
+/target/
+target/citrus-reports
+/target/citrus-reports/
