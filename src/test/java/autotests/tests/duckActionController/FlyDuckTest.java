@@ -1,6 +1,9 @@
 package autotests.tests.duckActionController;
 
 import autotests.clients.DuckActionsClient;
+import autotests.payloads.PayloadsCreateDuck;
+import autotests.payloads.PayloadsValidateResponse;
+import autotests.payloads.WingState;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
@@ -12,10 +15,16 @@ public class FlyDuckTest extends DuckActionsClient {
     @Test(description = "Тест: полёт уточки с активными крыльями и существующим id")
     @CitrusTest
     public void flyActive(@Optional @CitrusResource TestCaseRunner runner) {
-        createDuck(runner, "pink", "10", "puff", "quack", "ACTIVE");
+        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+                .color("pink")
+                .height(10.0)
+                .material("puff")
+                .sound("quack")
+                .wingsState(WingState.ACTIVE);
+        createDuck(runner, duck);
         getDuckId(runner);
         flyDuck(runner, "${duckId}");
-        validateResponseOk(runner, "{\n" + "  \"message\": \"I am flying\"\n" + "}");
+        validateResponseOk(runner, "duckActionTest/flyDuck/flyActive.json");
         deleteDuck(runner, "${duckId}");
     }
     //падает тест, потому что в документации ожидаемый ответ другой
@@ -23,10 +32,19 @@ public class FlyDuckTest extends DuckActionsClient {
     @Test(description = "Тест: полёт уточки с неактивными крыльями и существующим id")
     @CitrusTest
     public void flyFixed(@Optional @CitrusResource TestCaseRunner runner) {
-        createDuck(runner, "black", "10", "slime", "quack", "FIXED");
+        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+                .color("black")
+                .height(10.0)
+                .material("slime")
+                .sound("quack")
+                .wingsState(WingState.FIXED);
+        createDuck(runner, duck);
         getDuckId(runner);
         flyDuck(runner, "${duckId}");
-        validateResponseOk(runner, "{\n" + "  \"message\": \"I can't fly\"\n" + "}");
+        //проверка через Payload
+        PayloadsValidateResponse response = new PayloadsValidateResponse()
+                .message("I can't fly");
+        validateResponsesPayload(runner, response);
         deleteDuck(runner, "${duckId}");
     }
     //падает тест, потому что в документации ожидаемый ответ другой
@@ -34,10 +52,16 @@ public class FlyDuckTest extends DuckActionsClient {
     @Test(description = "Тест: полёт уточки с неопределёнными крыльями и существующим id")
     @CitrusTest
     public void flyUndefined(@Optional @CitrusResource TestCaseRunner runner) {
-        createDuck(runner, "black", "10", "slime", "quack", "UNDEFINED");
+        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+                .color("black")
+                .height(10.0)
+                .material("slime")
+                .sound("quack")
+                .wingsState(WingState.UNDEFINED);
+        createDuck(runner, duck);
         getDuckId(runner);
         flyDuck(runner, "${duckId}");
-        validateResponseOk(runner, "{\n" + "  \"message\": \"Wings are not detected :(\"\n" + "}");
+        validateResponseOk(runner, "duckActionTest/flyDuck/flyUndefined.json");
         deleteDuck(runner, "${duckId}");
     }
     //насчет этого не уверена как поступить, в документации такого вообще не ожидается, а проверить надо, оставила ответ сваггера

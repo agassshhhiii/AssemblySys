@@ -1,0 +1,8 @@
+{
+  "id": ${duckId},
+  "color": "black",
+  "height": 15.2,
+  "material": "rubber",
+  "sound": "quack",
+  "wingsState": "FIXED"
+}
