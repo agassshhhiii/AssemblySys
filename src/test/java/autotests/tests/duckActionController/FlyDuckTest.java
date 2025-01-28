@@ -1,8 +1,8 @@
 package autotests.tests.duckActionController;
 
 import autotests.clients.DuckActionsClient;
-import autotests.payloads.PayloadsCreateDuck;
-import autotests.payloads.PayloadsValidateResponse;
+import autotests.payloads.CreateDucks;
+import autotests.payloads.ResponseMessage;
 import autotests.payloads.WingState;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
@@ -15,7 +15,7 @@ public class FlyDuckTest extends DuckActionsClient {
     @Test(description = "Тест: полёт уточки с активными крыльями и существующим id")
     @CitrusTest
     public void flyActive(@Optional @CitrusResource TestCaseRunner runner) {
-        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+        CreateDucks duck = new CreateDucks()
                 .color("pink")
                 .height(10.0)
                 .material("puff")
@@ -32,7 +32,7 @@ public class FlyDuckTest extends DuckActionsClient {
     @Test(description = "Тест: полёт уточки с неактивными крыльями и существующим id")
     @CitrusTest
     public void flyFixed(@Optional @CitrusResource TestCaseRunner runner) {
-        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+        CreateDucks duck = new CreateDucks()
                 .color("black")
                 .height(10.0)
                 .material("slime")
@@ -42,7 +42,7 @@ public class FlyDuckTest extends DuckActionsClient {
         getDuckId(runner);
         flyDuck(runner, "${duckId}");
         //проверка через Payload
-        PayloadsValidateResponse response = new PayloadsValidateResponse()
+        ResponseMessage response = new ResponseMessage()
                 .message("I can't fly");
         validateResponsesPayload(runner, response);
         deleteDuck(runner, "${duckId}");
@@ -52,7 +52,7 @@ public class FlyDuckTest extends DuckActionsClient {
     @Test(description = "Тест: полёт уточки с неопределёнными крыльями и существующим id")
     @CitrusTest
     public void flyUndefined(@Optional @CitrusResource TestCaseRunner runner) {
-        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+        CreateDucks duck = new CreateDucks()
                 .color("black")
                 .height(10.0)
                 .material("slime")

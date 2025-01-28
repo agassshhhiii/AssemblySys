@@ -147,13 +147,13 @@ public class DuckActionsClient extends TestNGCitrusSpringSupport {
     }
 
     //метод для проверки ответа через string в DeleteDuck
-    public void validateResponseOkDeleteDuck(TestCaseRunner runner) {
+    public void validateResponseOkDeleteDuck(TestCaseRunner runner, String responseMessage) {
         runner.$(http().client(DuckService)
                 .receive()
                 .response(HttpStatus.OK)
                 .message()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body("{\n" + "  \"message\": \"Duck is deleted\"\n" + "}"));
+                .body(responseMessage));
     }
 
     //исходя из примера в лекции с созданием утки создала файл в payload

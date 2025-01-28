@@ -1,7 +1,7 @@
 package autotests.tests.duckActionController;
 
 import autotests.clients.DuckActionsClient;
-import autotests.payloads.PayloadsCreateDuck;
+import autotests.payloads.CreateDucks;
 import autotests.payloads.WingState;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
@@ -14,7 +14,7 @@ public class QuackDuckTest extends DuckActionsClient {
     @Test(description = "Тест: уточка с чётным id издает корректный звук (quack)")
     @CitrusTest
     public void evenQuack(@Optional @CitrusResource TestCaseRunner runner) {
-        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+        CreateDucks duck = new CreateDucks()
                 .color("pink")
                 .height(10.0)
                 .material("slime")
@@ -32,7 +32,7 @@ public class QuackDuckTest extends DuckActionsClient {
     @Test(description = "Тест: уточка с нечётным id издает корректный звук (quack)")
     @CitrusTest
     public void oddQuack(@Optional @CitrusResource TestCaseRunner runner) {
-        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+        CreateDucks duck = new CreateDucks()
                 .color("pink")
                 .height(10.0)
                 .material("slime")

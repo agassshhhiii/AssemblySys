@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Accessors(fluent = true)
 
-public class PayloadsValidateResponse {
+public class ResponseMessage {
     @JsonProperty("message")
     private String message;
 }

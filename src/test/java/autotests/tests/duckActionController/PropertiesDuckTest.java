@@ -1,7 +1,7 @@
 package autotests.tests.duckActionController;
 
 import autotests.clients.DuckActionsClient;
-import autotests.payloads.PayloadsCreateDuck;
+import autotests.payloads.CreateDucks;
 import autotests.payloads.WingState;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
@@ -14,7 +14,7 @@ public class PropertiesDuckTest extends DuckActionsClient {
     @Test(description = "Тест: уточка с нечётным id и материалом rubber показывает характеристики")
     @CitrusTest
     public void propertiesRubber(@Optional @CitrusResource TestCaseRunner runner) {
-        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+        CreateDucks duck = new CreateDucks()
                 .color("pink")
                 .height(10.0)
                 .material("rubber")
@@ -33,7 +33,7 @@ public class PropertiesDuckTest extends DuckActionsClient {
     @Test(description = "Тест: уточка с чётным id и материалом wood показывает характеристики")
     @CitrusTest
     public void propertiesWood(@Optional @CitrusResource TestCaseRunner runner) {
-        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+        CreateDucks duck = new CreateDucks()
                 .color("pink")
                 .height(10.0)
                 .material("wood")

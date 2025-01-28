@@ -1,7 +1,7 @@
 package autotests.tests.duckActionController;
 
 import autotests.clients.DuckActionsClient;
-import autotests.payloads.PayloadsCreateDuck;
+import autotests.payloads.CreateDucks;
 import autotests.payloads.WingState;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
@@ -15,7 +15,7 @@ public class SwimDuckTest extends DuckActionsClient {
     @Test(description = "Тест: плавание уточки с существующим id")
     @CitrusTest
     public void existingIdSwim(@Optional @CitrusResource TestCaseRunner runner) {
-        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+        CreateDucks duck = new CreateDucks()
                 .color("black")
                 .height(10.0)
                 .material("slime")
@@ -32,7 +32,7 @@ public class SwimDuckTest extends DuckActionsClient {
     @Test(description = "Тест: плавание уточки с несуществующим id")
     @CitrusTest
     public void nonExistingIdSwim(@Optional @CitrusResource TestCaseRunner runner) {
-        PayloadsCreateDuck duck = new PayloadsCreateDuck()
+        CreateDucks duck = new CreateDucks()
                 .color("black")
                 .height(10.0)
                 .material("slime")

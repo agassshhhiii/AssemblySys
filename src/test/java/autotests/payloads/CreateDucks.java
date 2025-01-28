@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Accessors(fluent = true)
 
-public class PayloadsCreateDuck {
+public class CreateDucks {
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("color")
