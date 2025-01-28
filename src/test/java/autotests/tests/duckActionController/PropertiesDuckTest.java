@@ -2,6 +2,7 @@ package autotests.tests.duckActionController;
 
 import autotests.clients.DuckActionsClient;
 import autotests.payloads.CreateDucks;
+import autotests.payloads.ResponseMessage;
 import autotests.payloads.WingState;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
@@ -24,7 +25,14 @@ public class PropertiesDuckTest extends DuckActionsClient {
         getDuckId(runner);
         checkOddDuck(runner, duck);
         propertiesDuck(runner, "${duckId}");
-        validateResponseOk(runner, "duckActionTest/PropertiesDuck/propertiesRubber.json");
+        //validateResponseOk(runner, "duckActionTest/PropertiesDuck/propertiesRubber.json");
+        ResponseMessage response = new ResponseMessage()
+                .color("pink")
+                .height(10.0)
+                .material("rubber")
+                .sound("quack")
+                .wingsState("ACTIVE");
+        validateResponsesPayload(runner, response);
         deleteDuck(runner, "${duckId}");
     }
     //в документации указывается, что просто должны вывестись характеристики, но в сваггере высота умножается на 100

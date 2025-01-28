@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 public class CreateDucks {
     @JsonProperty("id")
-    private Integer id;
+    private Long id;
     @JsonProperty("color")
     private String color;
     @JsonProperty("height")

@@ -14,4 +14,15 @@ import lombok.experimental.Accessors;
 public class ResponseMessage {
     @JsonProperty("message")
     private String message;
+
+    @JsonProperty("color")
+    private String color;
+    @JsonProperty("height")
+    private Double height;
+    @JsonProperty("material")
+    private String material;
+    @JsonProperty("sound")
+    private String sound;
+    @JsonProperty("wingsState")
+    private String wingsState;
 }

@@ -2,6 +2,7 @@ package autotests.tests.duckActionController;
 
 import autotests.clients.DuckActionsClient;
 import autotests.payloads.CreateDucks;
+import autotests.payloads.ResponseMessage;
 import autotests.payloads.WingState;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
@@ -24,7 +25,10 @@ public class QuackDuckTest extends DuckActionsClient {
         getDuckId(runner);
         checkEvenDuck(runner, duck);
         quackDuck(runner,"${duckId}","1","1");
-        validateResponseOk(runner, "duckActionTest/quackDuck/quackDuck.json");
+        //validateResponseOk(runner, "duckActionTest/quackDuck/quackDuck.json");
+        ResponseMessage response = new ResponseMessage()
+                .sound("quack");
+        validateResponsesPayload(runner, response);
         deleteDuck(runner, "${duckId}");
     }
     //падает тест, тк сваггер выдает moo
