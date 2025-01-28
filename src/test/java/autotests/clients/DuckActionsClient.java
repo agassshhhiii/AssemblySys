@@ -146,8 +146,8 @@ public class DuckActionsClient extends TestNGCitrusSpringSupport {
                 .body(new ClassPathResource(responseMessage)));
     }
 
-    //метод для проверки ответа через string в DeleteDuck
-    public void validateResponseOkDeleteDuck(TestCaseRunner runner, String responseMessage) {
+    //метод для проверки ответа через string
+    public void validateResponseViaStringOk(TestCaseRunner runner, String responseMessage) {
         runner.$(http().client(DuckService)
                 .receive()
                 .response(HttpStatus.OK)
