@@ -7,9 +7,13 @@ import autotests.payloads.WingState;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+@Epic("Tests for duckActionController")
+@Feature("Endpoint /api/duck/action/fly")
 public class FlyDuckTest extends DuckActionsClient {
 
     @Test(description = "Тест: полёт уточки с активными крыльями и существующим id")
@@ -65,4 +69,16 @@ public class FlyDuckTest extends DuckActionsClient {
         deleteDuck(runner, "${duckId}");
     }
     //насчет этого не уверена как поступить, в документации такого вообще не ожидается, а проверить надо, оставила ответ сваггера
+
+    //создание и удаление утки через бд
+    @Test(description = "Тест: полёт уточки с неопределёнными крыльями и существующим id")
+    @CitrusTest
+    public void flyUndefinedDB(@Optional @CitrusResource TestCaseRunner runner) {
+        runner.variable("duckId", "1234567");
+        databaseUpdate(runner,  "insert into DUCK (id, color, height, material, sound, wings_state)\n" +
+                "values (${duckId}, 'pink', 10.0, 'slime', 'quack','UNDEFINED');");
+        flyDuck(runner, "${duckId}");
+        validateResponseOk(runner, "duckActionTest/flyDuck/flyUndefined.json");
+        deleteDuckViaDB(runner);
+    }
 }

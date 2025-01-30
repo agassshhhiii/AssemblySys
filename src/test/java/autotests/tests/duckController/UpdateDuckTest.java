@@ -6,9 +6,13 @@ import autotests.payloads.WingState;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+@Epic("Tests for duckController")
+@Feature("Endpoint /api/duck/update")
 public class UpdateDuckTest extends DuckActionsClient {
 
     @Test(description = "Тест: изменение цвета и высоты уточки")
@@ -24,6 +28,8 @@ public class UpdateDuckTest extends DuckActionsClient {
         getDuckId(runner);
         updateDuck(runner, "${duckId}", "pink", "5", "slime", "quack", "FIXED");
         validateResponseOk(runner, "duckActionTest/updateDuck/updateDuck.json");
+        //проверка на изменение через бд
+        validateDuckInDatabase(runner, "${duckId}", "pink", "5.0", "slime", "quack", "FIXED");
         deleteDuck(runner, "${duckId}");
     }
 

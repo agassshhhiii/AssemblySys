@@ -7,9 +7,13 @@ import autotests.payloads.WingState;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+@Epic("Tests for duckActionController")
+@Feature("Endpoint /api/duck/action/quack")
 public class QuackDuckTest extends DuckActionsClient {
 
     @Test(description = "Тест: уточка с чётным id издает корректный звук (quack)")
