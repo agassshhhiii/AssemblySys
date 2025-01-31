@@ -12,6 +12,8 @@ import io.qameta.allure.Feature;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 @Epic("Tests for duckActionController")
 @Feature("Endpoint /api/duck/action/quack")
 public class QuackDuckTest extends DuckActionsClient {
@@ -52,5 +54,40 @@ public class QuackDuckTest extends DuckActionsClient {
         quackDuck(runner,"${duckId}","1","1");
         validateResponseOk(runner, "duckActionTest/quackDuck/quackDuck.json");
         deleteDuck(runner, "${duckId}");
+    }
+
+    //через бд
+    @Test(description = "Тест: уточка с нечётным id издает корректный звук (quack)")
+    @CitrusTest
+    public void oddQuackDB(@Optional @CitrusResource TestCaseRunner runner) {
+        long randomDuckId;
+        do {randomDuckId = Math.abs(new Random().nextLong());} while (randomDuckId % 2 == 0);
+        runner.variable("duckId", Long.toString(randomDuckId));
+        deleteDuckViaDB(runner);
+        runner.variable("color", "pink");
+        runner.variable("height", 10.0);
+        runner.variable("material", "slime");
+        runner.variable("sound", "quack");
+        runner.variable("wings_state", "ACTIVE");
+        createDuckViaDB(runner);
+        quackDuck(runner,"${duckId}","1","1");
+        validateResponseOk(runner, "duckActionTest/quackDuck/quackDuck.json");
+    }
+
+    @Test(description = "Тест: уточка с чётным id издает корректный звук (quack)")
+    @CitrusTest
+    public void evenQuackDB(@Optional @CitrusResource TestCaseRunner runner) {
+        long randomDuckId;
+        do {randomDuckId = Math.abs(new Random().nextLong());} while (randomDuckId % 2 != 0);
+        runner.variable("duckId", Long.toString(randomDuckId));
+        deleteDuckViaDB(runner);
+        runner.variable("color", "pink");
+        runner.variable("height", 10.0);
+        runner.variable("material", "slime");
+        runner.variable("sound", "quack");
+        runner.variable("wings_state", "ACTIVE");
+        createDuckViaDB(runner);
+        quackDuck(runner,"${duckId}","1","1");
+        validateResponseOk(runner, "duckActionTest/quackDuck/quackDuck.json");
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 @Epic("Tests for duckActionController")
 @Feature("Endpoint /api/duck/action/swim")
 public class SwimDuckTest extends DuckActionsClient {
@@ -49,5 +51,39 @@ public class SwimDuckTest extends DuckActionsClient {
         validateResponse(runner, "duckActionTest/swimDuck/nonExistingIdSwim.json", HttpStatus.NOT_FOUND);
         //если я задам большое число для id (10000), то при реальных условиях этот id мб создан как полноценная утка
         //и тогда тест будет работать не правильно, для этого теста я взяла ситуацию с удалённым id
+    }
+
+    //тесты через бд
+    @Test(description = "Тест: плавание уточки с существующим id")
+    @CitrusTest
+    public void existingIdSwimDB(@Optional @CitrusResource TestCaseRunner runner) {
+        long randomDuckId = Math.abs(new Random().nextLong());
+        runner.variable("duckId", Long.toString(randomDuckId));
+        deleteDuckViaDB(runner);
+        runner.variable("color", "black");
+        runner.variable("height", 10.0);
+        runner.variable("material", "slime");
+        runner.variable("sound", "quack");
+        runner.variable("wings_state", "ACTIVE");
+        createDuckViaDB(runner);
+        swimDuck(runner, "${duckId}");
+        validateResponseOk(runner, "duckActionTest/swimDuck/existingIdSwim.json");
+    }
+
+    @Test(description = "Тест: плавание уточки с несуществующим id")
+    @CitrusTest
+    public void nonExistingIdSwimDB(@Optional @CitrusResource TestCaseRunner runner) {
+        long randomDuckId = Math.abs(new Random().nextLong());
+        runner.variable("duckId", Long.toString(randomDuckId));
+        deleteDuckViaDB(runner);
+        runner.variable("color", "black");
+        runner.variable("height", 10.0);
+        runner.variable("material", "slime");
+        runner.variable("sound", "quack");
+        runner.variable("wings_state", "ACTIVE");
+        createDuckViaDB(runner);
+        deleteDuckViaDB(runner);
+        swimDuck(runner, "${duckId}");
+        validateResponse(runner, "duckActionTest/swimDuck/nonExistingIdSwim.json", HttpStatus.NOT_FOUND);
     }
 }

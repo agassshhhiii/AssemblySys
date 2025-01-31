@@ -34,6 +34,12 @@ public class DuckActionsClient extends TestNGCitrusSpringSupport {
         runner.$(sql(testDb).statement(sql));
     }
 
+    @Step("Create duck via DB")
+    public void createDuckViaDB(TestCaseRunner runner) {
+                databaseUpdate(runner, "insert into DUCK (id, color, height, material, sound, wings_state)\n" +
+                        "values (${duckId}, \'${color}\', ${height}, \'${material}\', \'${sound}\', \'${wings_state}\');");
+    }
+
     @Step("Endpoint for create duck")
     public void createDuck(TestCaseRunner runner, Object body) {
         runner.$(http().client(DuckService)
@@ -196,7 +202,7 @@ public class DuckActionsClient extends TestNGCitrusSpringSupport {
                 .body(new ObjectMappingPayloadBuilder(expectedPayload, new ObjectMapper())));
     }
 
-    @Step("Validate response via DB")
+    @Step("Validate duck in database")
     public void validateDuckInDatabase(TestCaseRunner runner, String id, String color, String height, String material, String sound, String wingsState) {
         runner.$(query(testDb)
                 .statement("SELECT * FROM DUCK WHERE ID=" + id)
