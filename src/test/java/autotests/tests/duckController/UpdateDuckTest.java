@@ -8,6 +8,7 @@ import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
@@ -29,7 +30,7 @@ public class UpdateDuckTest extends DuckActionsClient {
         createDuck(runner, duck);
         getDuckId(runner);
         updateDuck(runner, "${duckId}", "pink", "5", "slime", "quack", "FIXED");
-        validateResponseOk(runner, "duckActionTest/updateDuck/updateDuck.json");
+        validateResponse(runner, "duckActionTest/updateDuck/updateDuck.json",HttpStatus.OK);
         //проверка на изменение через бд
         validateDuckInDatabase(runner, "${duckId}", "pink", "5.0", "slime", "quack", "FIXED");
         deleteDuck(runner, "${duckId}");
@@ -47,7 +48,7 @@ public class UpdateDuckTest extends DuckActionsClient {
         createDuck(runner, duck);
         getDuckId(runner);
         updateDuck(runner, "${duckId}", "pink", "10", "slime", "quack-quack", "FIXED");
-        validateResponseOk(runner, "duckActionTest/updateDuck/updateDuck.json");
+        validateResponse(runner, "duckActionTest/updateDuck/updateDuck.json", HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
 
@@ -65,7 +66,7 @@ public class UpdateDuckTest extends DuckActionsClient {
         runner.variable("wings_state", "FIXED");
         createDuckViaDB(runner);
         updateDuck(runner, "${duckId}", "pink", "5", "slime", "quack", "FIXED");
-        validateResponseOk(runner, "duckActionTest/updateDuck/updateDuck.json");
+        validateResponse(runner, "duckActionTest/updateDuck/updateDuck.json", HttpStatus.OK);
         validateDuckInDatabase(runner, "${duckId}", "pink", "5.0", "slime", "quack", "FIXED");
     }
 
@@ -82,7 +83,7 @@ public class UpdateDuckTest extends DuckActionsClient {
         runner.variable("wings_state", "FIXED");
         createDuckViaDB(runner);
         updateDuck(runner, "${duckId}", "pink", "10", "slime", "quack-quack", "FIXED");
-        validateResponseOk(runner, "duckActionTest/updateDuck/updateDuck.json");
+        validateResponse(runner, "duckActionTest/updateDuck/updateDuck.json", HttpStatus.OK);
         validateDuckInDatabase(runner, "${duckId}", "pink", "10.0", "slime", "quack-quack", "FIXED");
     }
 }

@@ -8,6 +8,7 @@ import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
@@ -29,8 +30,7 @@ public class DeleteDuckTest extends DuckActionsClient {
         createDuck(runner, duck);
         getDuckId(runner);
         deleteDuck(runner, "${duckId}");
-        //проверка через string
-        validateResponseViaStringOk(runner, "{\n" + "  \"message\": \"Duck is deleted\"\n" + "}");
+        validateResponseString(runner, "{\n" + "  \"message\": \"Duck is deleted\"\n" + "}", HttpStatus.OK);
     }
 
     //через бд
@@ -49,6 +49,6 @@ public class DeleteDuckTest extends DuckActionsClient {
         //deleteDuckViaDB(runner);
         //если я использую удаление через бд, то тест выдает ошибку Failed to get correlation key
         deleteDuck(runner,"${duckId}");
-        validateResponseViaStringOk(runner, "{\n" + "  \"message\": \"Duck is deleted\"\n" + "}");
+        validateResponseString(runner, "{\n" + "  \"message\": \"Duck is deleted\"\n" + "}", HttpStatus.OK);
     }
 }

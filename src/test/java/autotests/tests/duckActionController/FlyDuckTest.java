@@ -9,6 +9,7 @@ import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 import java.util.Random;
@@ -29,7 +30,7 @@ public class FlyDuckTest extends DuckActionsClient {
         createDuck(runner, duck);
         getDuckId(runner);
         flyDuck(runner, "${duckId}");
-        validateResponseOk(runner, "duckActionTest/flyDuck/flyActive.json");
+        validateResponse(runner, "duckActionTest/flyDuck/flyActive.json", HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
     //падает тест, потому что в документации ожидаемый ответ другой
@@ -49,7 +50,7 @@ public class FlyDuckTest extends DuckActionsClient {
         //проверка через Payload
         ResponseMessage response = new ResponseMessage()
                 .message("I can't fly");
-        validateResponsesPayload(runner, response);
+        validateResponsesPayload(runner, response, HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
     //падает тест, потому что в документации ожидаемый ответ другой
@@ -66,7 +67,7 @@ public class FlyDuckTest extends DuckActionsClient {
         createDuck(runner, duck);
         getDuckId(runner);
         flyDuck(runner, "${duckId}");
-        validateResponseOk(runner, "duckActionTest/flyDuck/flyUndefined.json");
+        validateResponse(runner, "duckActionTest/flyDuck/flyUndefined.json", HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
     //насчет этого не уверена как поступить, в документации такого вообще не ожидается, а проверить надо, оставила ответ сваггера
@@ -85,7 +86,7 @@ public class FlyDuckTest extends DuckActionsClient {
         runner.variable("wings_state", "ACTIVE");
         createDuckViaDB(runner);
         flyDuck(runner, "${duckId}");
-        validateResponseOk(runner, "duckActionTest/flyDuck/flyActive.json");
+        validateResponse(runner, "duckActionTest/flyDuck/flyActive.json", HttpStatus.OK);
     }
 
     @Test(description = "Тест: полёт уточки с неактивными крыльями и существующим id")
@@ -104,7 +105,7 @@ public class FlyDuckTest extends DuckActionsClient {
         //проверка через Payload
         ResponseMessage response = new ResponseMessage()
                 .message("I can't fly");
-        validateResponsesPayload(runner, response);
+        validateResponsesPayload(runner, response, HttpStatus.OK);
     }
 
     @Test(description = "Тест: полёт уточки с неопределёнными крыльями и существующим id")
@@ -120,6 +121,6 @@ public class FlyDuckTest extends DuckActionsClient {
         runner.variable("wings_state", "UNDEFINED");
         createDuckViaDB(runner);
         flyDuck(runner, "${duckId}");
-        validateResponseOk(runner, "duckActionTest/flyDuck/flyUndefined.json");
+        validateResponse(runner, "duckActionTest/flyDuck/flyUndefined.json", HttpStatus.OK);
     }
 }

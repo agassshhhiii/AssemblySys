@@ -67,7 +67,7 @@ public class SwimDuckTest extends DuckActionsClient {
         runner.variable("wings_state", "ACTIVE");
         createDuckViaDB(runner);
         swimDuck(runner, "${duckId}");
-        validateResponseOk(runner, "duckActionTest/swimDuck/existingIdSwim.json");
+        validateResponse(runner, "duckActionTest/swimDuck/existingIdSwim.json", HttpStatus.OK);
     }
 
     @Test(description = "Тест: плавание уточки с несуществующим id")

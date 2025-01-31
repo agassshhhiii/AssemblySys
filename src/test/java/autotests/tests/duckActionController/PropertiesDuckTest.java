@@ -9,6 +9,7 @@ import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 import java.util.Random;
@@ -37,7 +38,7 @@ public class PropertiesDuckTest extends DuckActionsClient {
                 .material("rubber")
                 .sound("quack")
                 .wingsState("ACTIVE");
-        validateResponsesPayload(runner, response);
+        validateResponsesPayload(runner, response, HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
     //в документации указывается, что просто должны вывестись характеристики, но в сваггере высота умножается на 100
@@ -56,7 +57,7 @@ public class PropertiesDuckTest extends DuckActionsClient {
         getDuckId(runner);
         checkEvenDuck(runner, duck);
         propertiesDuck(runner, "${duckId}");
-        validateResponseOk(runner, "duckActionTest/PropertiesDuck/propertiesWood.json");
+        validateResponse(runner, "duckActionTest/PropertiesDuck/propertiesWood.json", HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
     //этот тест тоже будет падать, потому что вместо вывода характеристик сваггер выводит пустое тело
@@ -76,7 +77,7 @@ public class PropertiesDuckTest extends DuckActionsClient {
         runner.variable("wings_state", "ACTIVE");
         createDuckViaDB(runner);
         propertiesDuck(runner, "${duckId}");
-        validateResponseOk(runner, "duckActionTest/PropertiesDuck/propertiesWood.json");
+        validateResponse(runner, "duckActionTest/PropertiesDuck/propertiesWood.json", HttpStatus.OK);
     }
 
     @Test(description = "Тест: уточка с нечётным id и материалом rubber показывает характеристики")
@@ -93,6 +94,6 @@ public class PropertiesDuckTest extends DuckActionsClient {
         runner.variable("wings_state", "ACTIVE");
         createDuckViaDB(runner);
         propertiesDuck(runner, "${duckId}");
-        validateResponseOk(runner, "duckActionTest/PropertiesDuck/propertiesRubber.json");
+        validateResponse(runner, "duckActionTest/PropertiesDuck/propertiesRubber.json", HttpStatus.OK);
     }
 }

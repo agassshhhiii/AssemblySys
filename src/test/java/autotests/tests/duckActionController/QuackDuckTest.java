@@ -9,6 +9,7 @@ import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
@@ -34,7 +35,7 @@ public class QuackDuckTest extends DuckActionsClient {
         //validateResponseOk(runner, "duckActionTest/quackDuck/quackDuck.json");
         ResponseMessage response = new ResponseMessage()
                 .sound("quack");
-        validateResponsesPayload(runner, response);
+        validateResponsesPayload(runner, response, HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
     //падает тест, тк сваггер выдает moo
@@ -52,7 +53,7 @@ public class QuackDuckTest extends DuckActionsClient {
         getDuckId(runner);
         checkOddDuck(runner, duck);
         quackDuck(runner,"${duckId}","1","1");
-        validateResponseOk(runner, "duckActionTest/quackDuck/quackDuck.json");
+        validateResponse(runner, "duckActionTest/quackDuck/quackDuck.json", HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
 
@@ -71,7 +72,7 @@ public class QuackDuckTest extends DuckActionsClient {
         runner.variable("wings_state", "ACTIVE");
         createDuckViaDB(runner);
         quackDuck(runner,"${duckId}","1","1");
-        validateResponseOk(runner, "duckActionTest/quackDuck/quackDuck.json");
+        validateResponse(runner, "duckActionTest/quackDuck/quackDuck.json", HttpStatus.OK);
     }
 
     @Test(description = "Тест: уточка с чётным id издает корректный звук (quack)")
@@ -88,6 +89,6 @@ public class QuackDuckTest extends DuckActionsClient {
         runner.variable("wings_state", "ACTIVE");
         createDuckViaDB(runner);
         quackDuck(runner,"${duckId}","1","1");
-        validateResponseOk(runner, "duckActionTest/quackDuck/quackDuck.json");
+        validateResponse(runner, "duckActionTest/quackDuck/quackDuck.json", HttpStatus.OK);
     }
 }
