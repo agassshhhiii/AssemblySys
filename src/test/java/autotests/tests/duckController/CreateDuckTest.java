@@ -53,18 +53,19 @@ public class CreateDuckTest extends DuckActionsClient {
     @Test(dataProvider = "duckList")
     @CitrusTest
     @CitrusParameters({"payload","response","runner"})
-    public void createDucks(Object payload, String response, @Optional @CitrusResource TestCaseRunner runner) {
+    public void createDucks(Object payload, Object response, @Optional @CitrusResource TestCaseRunner runner) {
         createDuck(runner, payload);
-        validateResponse(runner, response, HttpStatus.OK);
+        validateResponsesPayload(runner, response, HttpStatus.OK);
+        deleteDuckViaDB(runner);
     }
     @DataProvider(name="duckList")
     public Object[][] DuckProvider() {
             return new Object[][] {
-                    {duck1, "duckActionTest/createDuck/createRubberDuck.json", null},
-                    {duck2, "duckActionTest/createDuck/createWoodDuck.json", null},
-                    {duck3, "duckActionTest/createDuck/createDuck3.json", null},
-                    {duck4, "duckActionTest/createDuck/createDuck4.json",null},
-                    {duck5, "duckActionTest/createDuck/createDuck5.json",null}
+                    {duck1, duck1.id(), null},
+                    {duck2, duck2.id(), null},
+                    {duck3, duck3.id(), null},
+                    {duck4, duck4.id(), null},
+                    {duck5, duck5.id(), null}
             };
     }
 

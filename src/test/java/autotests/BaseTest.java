@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.test.context.ContextConfiguration;
 
+import static com.consol.citrus.actions.ExecuteSQLAction.Builder.sql;
 import static com.consol.citrus.actions.ExecuteSQLQueryAction.Builder.query;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
@@ -22,6 +23,10 @@ public class BaseTest extends TestNGCitrusSpringSupport {
     protected HttpClient DuckService;
     @Autowired
     protected SingleConnectionDataSource testDb;
+
+    protected void dbUpdate(TestCaseRunner runner, String sql) {
+        runner.$(sql(testDb).statement(sql));
+    }
 
     protected void sendPostRequest(TestCaseRunner runner, HttpClient URL, String path, Object body) {
         runner.$(http()

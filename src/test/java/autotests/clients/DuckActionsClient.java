@@ -14,7 +14,8 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 public class DuckActionsClient extends BaseTest {
 
     public void databaseUpdate(TestCaseRunner runner, String sql) {
-        runner.$(sql(testDb).statement(sql));
+        dbUpdate(runner,sql);
+        //runner.$(sql(testDb).statement(sql));
     }
 
     @Step("Create duck via DB")
