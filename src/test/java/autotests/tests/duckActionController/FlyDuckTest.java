@@ -7,9 +7,15 @@ import autotests.payloads.WingState;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
+import java.util.Random;
 
+@Epic("Tests for duckActionController")
+@Feature("Endpoint /api/duck/action/fly")
 public class FlyDuckTest extends DuckActionsClient {
 
     @Test(description = "Тест: полёт уточки с активными крыльями и существующим id")
@@ -24,7 +30,7 @@ public class FlyDuckTest extends DuckActionsClient {
         createDuck(runner, duck);
         getDuckId(runner);
         flyDuck(runner, "${duckId}");
-        validateResponseOk(runner, "duckActionTest/flyDuck/flyActive.json");
+        validateResponse(runner, "duckActionTest/flyDuck/flyActive.json", HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
     //падает тест, потому что в документации ожидаемый ответ другой
@@ -44,7 +50,7 @@ public class FlyDuckTest extends DuckActionsClient {
         //проверка через Payload
         ResponseMessage response = new ResponseMessage()
                 .message("I can't fly");
-        validateResponsesPayload(runner, response);
+        validateResponsesPayload(runner, response, HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
     //падает тест, потому что в документации ожидаемый ответ другой
@@ -61,8 +67,60 @@ public class FlyDuckTest extends DuckActionsClient {
         createDuck(runner, duck);
         getDuckId(runner);
         flyDuck(runner, "${duckId}");
-        validateResponseOk(runner, "duckActionTest/flyDuck/flyUndefined.json");
+        validateResponse(runner, "duckActionTest/flyDuck/flyUndefined.json", HttpStatus.OK);
         deleteDuck(runner, "${duckId}");
     }
     //насчет этого не уверена как поступить, в документации такого вообще не ожидается, а проверить надо, оставила ответ сваггера
+
+    //тесты через бд
+    @Test(description = "Тест: полёт уточки с активными крыльями и существующим id")
+    @CitrusTest
+    public void flyActiveDB(@Optional @CitrusResource TestCaseRunner runner) {
+        long randomDuckId = Math.abs(new Random().nextLong());
+        runner.variable("duckId", Long.toString(randomDuckId));
+        deleteDuckViaDB(runner);
+        runner.variable("color", "pink");
+        runner.variable("height", 10.0);
+        runner.variable("material", "puff");
+        runner.variable("sound", "quack");
+        runner.variable("wings_state", "ACTIVE");
+        createDuckViaDB(runner);
+        flyDuck(runner, "${duckId}");
+        validateResponse(runner, "duckActionTest/flyDuck/flyActive.json", HttpStatus.OK);
+    }
+
+    @Test(description = "Тест: полёт уточки с неактивными крыльями и существующим id")
+    @CitrusTest
+    public void flyFixedDB(@Optional @CitrusResource TestCaseRunner runner) {
+        long randomDuckId = Math.abs(new Random().nextLong());
+        runner.variable("duckId", Long.toString(randomDuckId));
+        deleteDuckViaDB(runner);
+        runner.variable("color", "black");
+        runner.variable("height", 10.0);
+        runner.variable("material", "slime");
+        runner.variable("sound", "quack");
+        runner.variable("wings_state", "FIXED");
+        createDuckViaDB(runner);
+        flyDuck(runner, "${duckId}");
+        //проверка через Payload
+        ResponseMessage response = new ResponseMessage()
+                .message("I can't fly");
+        validateResponsesPayload(runner, response, HttpStatus.OK);
+    }
+
+    @Test(description = "Тест: полёт уточки с неопределёнными крыльями и существующим id")
+    @CitrusTest
+    public void flyUndefinedDB(@Optional @CitrusResource TestCaseRunner runner) {
+        long randomDuckId = Math.abs(new Random().nextLong());
+        runner.variable("duckId", Long.toString(randomDuckId));
+        deleteDuckViaDB(runner);
+        runner.variable("color", "pink");
+        runner.variable("height", 10.0);
+        runner.variable("material", "slime");
+        runner.variable("sound", "quack");
+        runner.variable("wings_state", "UNDEFINED");
+        createDuckViaDB(runner);
+        flyDuck(runner, "${duckId}");
+        validateResponse(runner, "duckActionTest/flyDuck/flyUndefined.json", HttpStatus.OK);
+    }
 }
